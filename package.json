@@ -1,0 +1,46 @@
+{
+  "name": "verdaccio-bitbucket-server",
+  "version": "1.0.0",
+  "description": "Verdaccio Authentication Plugin via Bitbucket Server",
+  "main": "lib/index.js",
+  "files": [
+    "/lib"
+  ],
+  "scripts": {
+    "clean:build": "rimraf ./lib",
+    "build": "babel ./src --out-dir lib",
+    "lint": "eslint ./src",
+    "prebuild": "npm run clean:build",
+    "prepublish": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oeph/verdaccio-bitbucket-server.git"
+  },
+  "keywords": [
+    "verdaccio",
+    "bitbucket",
+    "bitbucket server"
+  ],
+  "author": "oeph",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/oeph/verdaccio-bitbucket-server/issues"
+  },
+  "homepage": "https://github.com/oeph/verdaccio-bitbucket-server#readme",
+  "engines": {
+    "node": "*"
+  },
+  "dependencies": {
+    "axios": "^0.18.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.7.0",
+    "rimraf": "^2.6.2"
+  }
+}
