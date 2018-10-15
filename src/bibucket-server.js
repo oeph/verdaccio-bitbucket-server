@@ -18,7 +18,7 @@ export default class Bitbucket {
                 password
             }
         }).then(res => {
-            const { values } = res;
+            const { values = [] } = res.data;
             if (values.some(group => this.allowedGroups.indexOf(group) !== -1)) {
                 cb(null, values);
             } else {
