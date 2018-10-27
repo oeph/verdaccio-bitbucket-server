@@ -1,4 +1,4 @@
-import BitbucketServer from './bibucket-server';
+import BitbucketServer from './bitbucket-server';
 
 /**
  * A new instance of the authentication module using bitbucket server
@@ -6,6 +6,6 @@ import BitbucketServer from './bibucket-server';
  * @param {Object} stuff 
  * @returns {Object} new Bitbucket Authentication module
  */
-export default function(config, stuff) {
+export default function (config, stuff) {
   return new BitbucketServer(config, stuff);
 }

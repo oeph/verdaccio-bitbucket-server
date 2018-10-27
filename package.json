@@ -19,8 +19,9 @@
   },
   "keywords": [
     "verdaccio",
+    "verdaccio-plugin",
     "bitbucket",
-    "bitbucket server"
+    "bitbucket-server"
   ],
   "author": "oeph",
   "license": "MIT",

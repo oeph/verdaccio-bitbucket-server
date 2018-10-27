@@ -1,10 +1,10 @@
 const utils = {
     removeTrailingSlash: function (serverUrl) {
-        return serverUrl.replace(/\/+$/, "");
+        return serverUrl ? serverUrl.replace(/\/+$/, "") : "";
     },
 
     parseGroups: function (groupsString) {
-        return groupsString.split(',').map(g => g.trim(g));
+        return groupsString ? groupsString.split(',').map(g => g.trim(g)) : [];
     }
 };
 
