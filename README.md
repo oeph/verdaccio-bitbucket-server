@@ -25,6 +25,3 @@ The "allow" config can be used to restrict access to Verdaccio based on groups o
 
 ### roleTypes
 The "roleTypes" specifies, which entities are used for the retrieval of user roles.
-
-## Notes
-Currently only authenticate is supported. However, the current plan is to support also the other verdaccio authentication functions.
