@@ -4,7 +4,7 @@ import BitbucketServerApi from './api';
 export default class BitbucketServerAuth {
     constructor(config, stuff) {
         this.allowedGroups = utils.parseGroups(config.allow);
-        this.roleTypes = config.roleTypes || ['groups'];
+        this.roleTypes = config.roleTypes || ['groups', 'projects', 'repos'];
 
         this.api = new BitbucketServerApi({
             url: utils.removeTrailingSlash(config.url || config.serverUrl),
