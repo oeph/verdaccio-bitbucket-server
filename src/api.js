@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 const projectPermissions = {
-    'PROJECT_VIEW': 'View',
     'PROJECT_READ': 'Read',
     'PROJECT_WRITE': 'Write',
     'PROJECT_ADMIN': 'Admin',

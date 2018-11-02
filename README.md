@@ -9,7 +9,7 @@ Verdaccio Authentication Plugin for Bitbucket Server
 $ npm install -g verdaccio-bitbucket-server
 ```
 
-## Configuration
+## Plugin Configuration
 
 ```yaml
 auth:
@@ -36,3 +36,26 @@ The "roleTypes" specifies, which entities are used for the retrieval of user rol
 The "limit" config specifies how many entities are fetched from the server, since paging of the responses is currently not supported.
 
 **Default: 100**
+
+## Package Configuration
+
+```yaml
+package:
+  '**':
+    access: $authenticated
+    publish: $REPO_WRITE
+    proxy: npmjs
+    bitbucketServer: true
+```
+
+### Access rules
+General rules:
+- $all
+- $authenticated
+
+Package rules:
+- $REPO_READ
+- $REPO_WRITE
+- $REPO_ADMIN
+
+The package rules will match the respective rights for the repository.

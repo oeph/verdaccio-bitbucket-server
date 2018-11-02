@@ -1,5 +1,8 @@
 import utils from './utils';
-import BitbucketServerApi from './api';
+import BitbucketServerApi, { repoPermissions } from './api';
+
+const $ALL = '$all';
+const $AUTH = '$authenticated';
 
 export default class BitbucketServerAuth {
     constructor(config, stuff) {
@@ -17,7 +20,6 @@ export default class BitbucketServerAuth {
 
     authenticate(username, password, cb) {
         this.logger.debug(`[bitbucket-server] authenticating user: ${username}`);
-
 
         const groups = this.api.fetchGroups(username, password)
             .then(groups => {
@@ -44,6 +46,63 @@ export default class BitbucketServerAuth {
     }
 
     adduser(username, password, cb) {
-        cb(null, false);
+        this.logger.trace('[bitbucket-server] adduser was called for user ' + username);
+        cb(null, true);
+    }
+
+    allow_access(user, package, cb) {
+        if (!package.bitbucketServer) return cb(null, false);
+
+        const access = package.access || [];
+
+        if (user.name === undefined) {
+            if (access.includes($ALL)) {
+                return cb(null, true);
+            } else {
+                return cb(new Error('Acces denied. User is not authenticated.'));
+            }
+        }
+
+        if (this.matchAccessRules(user, access, package)) {
+            return cb(null, true);
+        } else {
+            return cb(new Error('Access denied. User does not have the required groups.'));
+        }
+    }
+
+    allow_publish(user, package, cb) {
+        if (!package.bitbucketServer) return cb(null, false);
+
+        const publish = package.publish || [];
+
+        if (user.name === undefined) {
+            if (access.includes($ALL)) {
+                return cb(null, true);
+            } else {
+                return cb(new Error('Acces denied. User is not authenticated.'));
+            }
+        }
+
+        if (this.matchAccessRules(user, publish, package)) {
+            return cb(null, true);
+        } else {
+            return cb(new Error('Access denied. User does not have the required groups.'));
+        }
+    }
+
+    matchAccessRules(user, access, package) {
+        if (access.includes($AUTH)) {
+            return true;
+        }
+        if (user.real_groups !== undefined && access.some(group => user.real_groups.includes(group))) {
+            return true;
+        }
+        if (access.some(group => repoPermissions.hasOwnProperty(group.slice(1)))) {
+            const permissionType = repoPermissions[group.slice(1)];
+            if (user.real_groups.includes(`${package.name}(${permissionType})`)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
