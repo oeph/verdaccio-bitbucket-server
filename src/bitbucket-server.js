@@ -50,30 +50,10 @@ export default class BitbucketServerAuth {
         cb(null, true);
     }
 
-    allow_access(user, package, cb) {
-        if (!package.bitbucketServer) return cb(null, false);
+    allow_access(user, _package, cb) {
+        if (!_package.bitbucketServer) return cb(null, false);
 
-        const access = package.access || [];
-
-        if (user.name === undefined) {
-            if (access.includes($ALL)) {
-                return cb(null, true);
-            } else {
-                return cb(new Error('Acces denied. User is not authenticated.'));
-            }
-        }
-
-        if (this.matchAccessRules(user, access, package)) {
-            return cb(null, true);
-        } else {
-            return cb(new Error('Access denied. User does not have the required groups.'));
-        }
-    }
-
-    allow_publish(user, package, cb) {
-        if (!package.bitbucketServer) return cb(null, false);
-
-        const publish = package.publish || [];
+        const access = _package.access || [];
 
         if (user.name === undefined) {
             if (access.includes($ALL)) {
@@ -83,14 +63,34 @@ export default class BitbucketServerAuth {
             }
         }
 
-        if (this.matchAccessRules(user, publish, package)) {
+        if (this.matchAccessRules(user, access, _package)) {
             return cb(null, true);
         } else {
             return cb(new Error('Access denied. User does not have the required groups.'));
         }
     }
 
-    matchAccessRules(user, access, package) {
+    allow_publish(user, _package, cb) {
+        if (!_package.bitbucketServer) return cb(null, false);
+
+        const publish = _package.publish || [];
+
+        if (user.name === undefined) {
+            if (access.includes($ALL)) {
+                return cb(null, true);
+            } else {
+                return cb(new Error('Acces denied. User is not authenticated.'));
+            }
+        }
+
+        if (this.matchAccessRules(user, publish, _package)) {
+            return cb(null, true);
+        } else {
+            return cb(new Error('Access denied. User does not have the required groups.'));
+        }
+    }
+
+    matchAccessRules(user, access, _package) {
         if (access.includes($AUTH)) {
             return true;
         }
@@ -99,7 +99,7 @@ export default class BitbucketServerAuth {
         }
         if (access.some(group => repoPermissions.hasOwnProperty(group.slice(1)))) {
             const permissionType = repoPermissions[group.slice(1)];
-            if (user.real_groups.includes(`${package.name}(${permissionType})`)) {
+            if (user.real_groups.includes(`${_package.name}(${permissionType})`)) {
                 return true;
             }
         }
