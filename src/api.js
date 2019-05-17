@@ -21,13 +21,13 @@ class BitbucketServerApi {
     async fetchGroups(username, password) {
         const res = await axios({
             method: 'get',
-            url: `${this.url}/rest/api/1.0/groups?limit=${this.pageLimit}`,
+            url: `${this.url}/rest/api/1.0/admin/users/more-members?context=${username}`,
             auth: {
                 username,
                 password,
             }
         });
-        return res.data.values || [];
+        return (res.data.values || []).map(value => value.name);
     }
 
     async fetchProjects(username, password) {
