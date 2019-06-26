@@ -4,7 +4,7 @@
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/oeph/verdaccio-bitbucket-server.svg)
 ![NPM](https://img.shields.io/npm/l/verdaccio-bitbucket-server.svg)
 
-Verdaccio Authentication Plugin for Bitbucket Server
+[Verdaccio](https://github.com/verdaccio/verdaccio) Authentication Plugin for Bitbucket Server
 
 ## Installation
 
