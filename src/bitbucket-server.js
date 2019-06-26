@@ -55,12 +55,12 @@ export default class BitbucketServerAuth {
 
         const access = _package.access || [];
 
+        if (access.includes($ALL)) {
+            return cb(null, true);
+        }
+
         if (user.name === undefined) {
-            if (access.includes($ALL)) {
-                return cb(null, true);
-            } else {
-                return cb(new Error('Acces denied. User is not authenticated.'));
-            }
+            return cb(new Error('Acces denied. User is not authenticated.'));
         }
 
         if (this.matchAccessRules(user, access, _package)) {
@@ -75,12 +75,12 @@ export default class BitbucketServerAuth {
 
         const publish = _package.publish || [];
 
+        if (access.includes($ALL)) {
+            return cb(null, true);
+        }
+
         if (user.name === undefined) {
-            if (access.includes($ALL)) {
-                return cb(null, true);
-            } else {
-                return cb(new Error('Acces denied. User is not authenticated.'));
-            }
+            return cb(new Error('Acces denied. User is not authenticated.'));
         }
 
         if (this.matchAccessRules(user, publish, _package)) {
