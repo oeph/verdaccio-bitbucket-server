@@ -43,7 +43,6 @@ jobs:
         with:
           node-version: 10
           registry-url: https://npm.pkg.github.com/
-          scope: '@oeph'
       - run: npm install
       - run: npm publish
         env:
