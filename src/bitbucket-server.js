@@ -12,25 +12,35 @@ export default class BitbucketServerAuth {
         this.api = new BitbucketServerApi({
             url: utils.removeTrailingSlash(config.url || config.serverUrl),
             pageLimit: config.limit,
-        })
+        });
 
         this.logger = stuff.logger;
         this.logger.debug('[bitbucket-server] config: \n', config);
     }
 
     authenticate(username, password, cb) {
-        this.logger.debug(`[bitbucket-server] authenticating user: ${username}`);
+        this.logger.debug(
+            `[bitbucket-server] authenticating user: ${username}`
+        );
 
-        const groups = this.api.fetchGroups(username, password)
-            .then(groups => {
-                if (this.allowedGroups.length === 0 || groups.some(group => this.allowedGroups.indexOf(group) !== -1)) {
-                    this.logger.debug(`[bitbucket-server] authenticated user (${username}) with groups: ${groups.join(',')}`)
-                    return groups;
-                } else {
-                    this.logger.debug(`[bitbucket-server] user (${username}) was not allowed to login (see config.allow)`);
-                    throw new Error('User was not allowed to login.');
-                }
-            });
+        const groups = this.api.fetchGroups(username, password).then(groups => {
+            if (
+                this.allowedGroups.length === 0 ||
+                groups.some(group => this.allowedGroups.indexOf(group) !== -1)
+            ) {
+                this.logger.debug(
+                    `[bitbucket-server] authenticated user (${username}) with groups: ${groups.join(
+                        ','
+                    )}`
+                );
+                return groups;
+            } else {
+                this.logger.debug(
+                    `[bitbucket-server] user (${username}) was not allowed to login (see config.allow)`
+                );
+                throw new Error('User was not allowed to login.');
+            }
+        });
 
         const projects = this.api.fetchProjects(username, password);
         const repos = this.api.fetchRepos(username, password);
@@ -40,13 +50,17 @@ export default class BitbucketServerAuth {
                 cb(null, [].concat(...values));
             })
             .catch(err => {
-                this.logger.warn('[bitbucket-server] Error during authentication: ', err);
+                this.logger.warn(
+                    `[bitbucket-server] Error during authentication: ${err.response.status} for URL (${err.response.request.path})`
+                );
                 cb(err, false);
             });
     }
 
     adduser(username, password, cb) {
-        this.logger.trace('[bitbucket-server] adduser was called for user ' + username);
+        this.logger.trace(
+            '[bitbucket-server] adduser was called for user ' + username
+        );
         cb(null, true);
     }
 
@@ -66,7 +80,11 @@ export default class BitbucketServerAuth {
         if (this.matchAccessRules(user, access, _package)) {
             return cb(null, true);
         } else {
-            return cb(new Error('Access denied. User does not have the required groups.'));
+            return cb(
+                new Error(
+                    'Access denied. User does not have the required groups.'
+                )
+            );
         }
     }
 
@@ -86,7 +104,11 @@ export default class BitbucketServerAuth {
         if (this.matchAccessRules(user, publish, _package)) {
             return cb(null, true);
         } else {
-            return cb(new Error('Access denied. User does not have the required groups.'));
+            return cb(
+                new Error(
+                    'Access denied. User does not have the required groups.'
+                )
+            );
         }
     }
 
@@ -94,12 +116,19 @@ export default class BitbucketServerAuth {
         if (access.includes($AUTH)) {
             return true;
         }
-        if (user.real_groups !== undefined && access.some(group => user.real_groups.includes(group))) {
+        if (
+            user.real_groups !== undefined &&
+            access.some(group => user.real_groups.includes(group))
+        ) {
             return true;
         }
-        if (access.some(group => repoPermissions.hasOwnProperty(group.slice(1)))) {
+        if (
+            access.some(group => repoPermissions.hasOwnProperty(group.slice(1)))
+        ) {
             const permissionType = repoPermissions[group.slice(1)];
-            if (user.real_groups.includes(`${_package.name}(${permissionType})`)) {
+            if (
+                user.real_groups.includes(`${_package.name}(${permissionType})`)
+            ) {
                 return true;
             }
         }
