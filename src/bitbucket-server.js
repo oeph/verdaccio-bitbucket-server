@@ -93,7 +93,7 @@ export default class BitbucketServerAuth {
 
         const publish = _package.publish || [];
 
-        if (access.includes($ALL)) {
+        if (publish.includes($ALL)) {
             return cb(null, true);
         }
 
@@ -122,10 +122,14 @@ export default class BitbucketServerAuth {
         ) {
             return true;
         }
+        let matchedGroup = null;
         if (
-            access.some(group => repoPermissions.hasOwnProperty(group.slice(1)))
+            access.some(group => {
+                matchedGroup = group.slice(1);
+                repoPermissions.hasOwnProperty(matchedGroup);
+            })
         ) {
-            const permissionType = repoPermissions[group.slice(1)];
+            const permissionType = repoPermissions[matchedGroup];
             if (
                 user.real_groups.includes(`${_package.name}(${permissionType})`)
             ) {
