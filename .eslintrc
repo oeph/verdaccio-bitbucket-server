@@ -1,7 +1,11 @@
 {
     "extends": "eslint:recommended",
+    "plugins": ["jest"],
     "parser": "babel-eslint",
     "rules": {
         "strict": 0
+    },
+    "env": {
+        "jest/globals": true
     }
 }

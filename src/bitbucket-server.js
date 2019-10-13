@@ -1,4 +1,4 @@
-import utils from './utils';
+import { parseGroups, removeTrailingSlash } from './utils';
 import BitbucketServerApi, { repoPermissions } from './api';
 
 const $ALL = '$all';
@@ -6,11 +6,11 @@ const $AUTH = '$authenticated';
 
 export default class BitbucketServerAuth {
     constructor(config, stuff) {
-        this.allowedGroups = utils.parseGroups(config.allow);
+        this.allowedGroups = parseGroups(config.allow);
         this.roleTypes = config.roleTypes || ['groups', 'projects', 'repos'];
 
         this.api = new BitbucketServerApi({
-            url: utils.removeTrailingSlash(config.url || config.serverUrl),
+            url: removeTrailingSlash(config.url || config.serverUrl),
             pageLimit: config.limit,
         });
 
