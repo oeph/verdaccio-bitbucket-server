@@ -126,7 +126,7 @@ export default class BitbucketServerAuth {
         if (
             access.some(group => {
                 matchedGroup = group.slice(1);
-                repoPermissions.hasOwnProperty(matchedGroup);
+                return repoPermissions.hasOwnProperty(matchedGroup);
             })
         ) {
             const permissionType = repoPermissions[matchedGroup];
