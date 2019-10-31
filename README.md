@@ -1,8 +1,8 @@
 # verdaccio-bitbucket-server
-![npm](https://img.shields.io/npm/v/verdaccio-bitbucket-server.svg)
-![npm](https://img.shields.io/npm/dy/verdaccio-bitbucket-server.svg)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/oeph/verdaccio-bitbucket-server.svg)
-![NPM](https://img.shields.io/npm/l/verdaccio-bitbucket-server.svg)
+![npm](https://img.shields.io/npm/v/verdaccio-bitbucket-server?style=for-the-badge)
+![npm](https://img.shields.io/npm/dy/verdaccio-bitbucket-server?style=for-the-badge)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/oeph/verdaccio-bitbucket-server?style=for-the-badge)
+![NPM](https://img.shields.io/npm/l/verdaccio-bitbucket-server?style=for-the-badge)
 
 [Verdaccio](https://github.com/verdaccio/verdaccio) Authentication Plugin for Bitbucket Server
 
