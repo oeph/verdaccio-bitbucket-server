@@ -12,6 +12,7 @@ export default class BitbucketServerAuth {
         this.api = new BitbucketServerApi({
             url: removeTrailingSlash(config.url || config.serverUrl),
             pageLimit: config.limit,
+            cache: config.cache,
         });
 
         this.logger = stuff.logger;
