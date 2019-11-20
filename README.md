@@ -21,6 +21,7 @@ auth:
     allow: "Team A, Developer" # optional; default = ""
     roleTypes: [groups, projects] # optional; default = [groups, projects, repos]
     limit: 100 # optional; default = 100
+    cache: false # optional; default = { max: 50, maxAge: 1000 * 60 }
 ```
 
 ### allow
@@ -39,6 +40,13 @@ The "roleTypes" specifies, which entities are used for the retrieval of user rol
 The "limit" config specifies how many entities are fetched from the server, since paging of the responses is currently not supported.
 
 **Default: 100**
+
+### cache
+The "cache" config specifies the [lru-cache](https://www.npmjs.com/package/lru-cache) options. The cache is used to cache requests against bitbucket api.
+
+*Hint: Caching can be disabled by specifying `false`.*
+
+**Default: { max: 50, maxAge: 1000 * 60 }**
 
 ## Package Configuration
 
