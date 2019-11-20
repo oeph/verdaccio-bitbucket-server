@@ -7,11 +7,13 @@ const $AUTH = '$authenticated';
 export default class BitbucketServerAuth {
     constructor(config, stuff) {
         this.allowedGroups = parseGroups(config.allow);
+        /** @type {string[]} */
         this.roleTypes = config.roleTypes || ['groups', 'projects', 'repos'];
 
         this.api = new BitbucketServerApi({
             url: removeTrailingSlash(config.url || config.serverUrl),
             pageLimit: config.limit,
+            cache: config.cache,
         });
 
         this.logger = stuff.logger;
@@ -23,7 +25,7 @@ export default class BitbucketServerAuth {
             `[bitbucket-server] authenticating user: ${username}`
         );
 
-        const groups = this.api.fetchGroups(username, password).then(groups => {
+        const groups = this.roleTypes.includes('groups') ? this.api.fetchGroups(username, password).then(groups => {
             if (
                 this.allowedGroups.length === 0 ||
                 groups.some(group => this.allowedGroups.indexOf(group) !== -1)
@@ -40,10 +42,10 @@ export default class BitbucketServerAuth {
                 );
                 throw new Error('User was not allowed to login.');
             }
-        });
+        }) : [];
 
-        const projects = this.api.fetchProjects(username, password);
-        const repos = this.api.fetchRepos(username, password);
+        const projects = this.roleTypes.includes('projects') ? this.api.fetchProjects(username, password) : Promise.resolve([]);
+        const repos = this.roleTypes.includes('repos') ? this.api.fetchRepos(username, password) : Promise.resolve([]);
 
         Promise.all([groups, projects, repos])
             .then(values => {
