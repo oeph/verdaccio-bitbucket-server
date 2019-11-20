@@ -33,7 +33,7 @@ The "allow" config can be used to restrict access to Verdaccio based on groups o
 ### roleTypes
 The "roleTypes" specifies, which entities are used for the retrieval of user roles.
 
-**Default: [groups, projects, roles]**
+**Default: [groups, projects, repos]**
 
 ### limit
 The "limit" config specifies how many entities are fetched from the server, since paging of the responses is currently not supported.
