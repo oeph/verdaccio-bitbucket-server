@@ -1,4 +1,4 @@
-name: publish package
+name: test ci
 
 on:
   pull_request:
