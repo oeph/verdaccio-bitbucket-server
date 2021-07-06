@@ -1,6 +1,6 @@
 {
   "name": "verdaccio-bitbucket-server",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "Verdaccio Authentication Plugin via Bitbucket Server",
   "main": "lib/index.js",
   "files": [
