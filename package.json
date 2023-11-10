@@ -34,7 +34,7 @@
     "node": "*"
   },
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^1.6.0",
     "lru-cache": "^5.1.1"
   },
   "devDependencies": {
